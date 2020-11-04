@@ -1,0 +1,8 @@
+.game-list{
+    list-style: none;
+}
+.game-list-item{
+    display: flex;
+}
+
+
