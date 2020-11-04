@@ -15,7 +15,9 @@ ReactDOM.render(
         <ErrorBoundry>
             <GamestoreServiceProvider value = {gamestoreService}>
               <Router>
-                  <App/>
+                  <App
+                  {{Hello}}
+                  />
               </Router>
             </GamestoreServiceProvider>
         </ErrorBoundry>
