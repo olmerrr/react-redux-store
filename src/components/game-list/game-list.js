@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import  './game-list.css';
 import {withGamestoreService} from "../hoc/with-gamestore-service";
-import {gamesLoaded} from "../../actions";
+import {gamesLoaded, gamesRequested} from "../../actions";
 import {compose} from "../../utils/index";
 import Spinner from '../spinner';
 
 class GameList extends Component{
     componentDidMount() {
-        const {gamestoreService,gamesLoaded} = this.props;
+        const {gamestoreService, gamesLoaded, gamesRequested} = this.props;
+        gamesRequested();
         gamestoreService.getGames()
             .then((data) => gamesLoaded(data));
 
@@ -42,7 +43,10 @@ const mapStateToProps = ({games, loading}) =>{
         loading
     };
 }
-const mapDispatchToProps =  {gamesLoaded};
+const mapDispatchToProps =  {
+    gamesLoaded,
+    gamesRequested,
+};
 
 export default compose(
     withGamestoreService(),

@@ -4,6 +4,13 @@ const gamesLoaded = (newGames) => {
         payload: newGames
     }
 }
+
+const gamesRequested = () => {
+    return {
+        type: 'GAMES_REQUESTED'
+    }
+};
 export {
-    gamesLoaded
+    gamesLoaded,
+    gamesRequested,
 };
