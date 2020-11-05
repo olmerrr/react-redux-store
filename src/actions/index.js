@@ -10,7 +10,15 @@ const gamesRequested = () => {
         type: 'GAMES_REQUESTED'
     }
 };
+
+const gamesError = (error) => {
+    return {
+        type: 'GAMES_ERROR',
+        payload: error
+    }
+};
 export {
     gamesLoaded,
     gamesRequested,
+    gamesError,
 };

@@ -43,8 +43,11 @@ export default class GamestoreService {
 
     ];
     getGames(){
-       return new Promise((resolve) => {
+       return new Promise((resolve, reject) => {
         setTimeout(()=>{
+            if(Math.random() > 0.75){
+            reject(new Error('Something wrong'));
+            }else
             resolve(this.data)
         }, 700)
        })
