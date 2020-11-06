@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import  './game-list.css';
 import {withGamestoreService} from "../hoc/with-gamestore-service";
-import {gamesLoaded, gamesRequested, gamesError} from "../../actions";
+import {fetchGames} from "../../actions";
 import {compose} from "../../utils/index";
 import Spinner from '../spinner';
 import ErrorIndicator from './../error-indicator/index';
@@ -44,17 +44,11 @@ const mapStateToProps = ({games, loading, error}) =>{
         error
     };
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
-    const {gamestoreService} = ownProps;
+const mapDispatchToProps = (dispatch, {gamestoreService}) => {
     return {
-        fetchGames: () => {
-        dispatch(gamesRequested());
-        gamestoreService.getGames()
-            .then((data) => dispatch(gamesLoaded(data)))
-            .catch((err) => dispatch(gamesError(err)));
+        fetchGames: fetchGames(gamestoreService,dispatch)
         }
     }
-};
 
 export default compose(
     withGamestoreService(),

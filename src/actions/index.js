@@ -1,24 +1,28 @@
+const gamesRequested = () => {
+    return {
+        type: 'FETCH_GAMES_REQUEST'
+    }
+};
+
 const gamesLoaded = (newGames) => {
     return {
-        type: 'GAMES_LOADED',
+        type: 'FETCH_GAMES_SUCCESS',
         payload: newGames
     }
 }
 
-const gamesRequested = () => {
-    return {
-        type: 'GAMES_REQUESTED'
-    }
-};
-
 const gamesError = (error) => {
     return {
-        type: 'GAMES_ERROR',
+        type: 'FETCH_GAMES_FAILURE',
         payload: error
     }
 };
+const fetchGames = (gamestoreService, dispatch) => () => {
+    dispatch(gamesRequested());
+    gamestoreService.getGames()
+        .then((data) => dispatch(gamesLoaded(data)))
+        .catch((err) => dispatch(gamesError(err)));
+    }
 export {
-    gamesLoaded,
-    gamesRequested,
-    gamesError,
+    fetchGames
 };
