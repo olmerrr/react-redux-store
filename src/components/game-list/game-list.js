@@ -9,7 +9,23 @@ import {compose} from "../../utils/index";
 import Spinner from '../spinner';
 import ErrorIndicator from './../error-indicator/index';
 
-class GameList extends Component{
+const GameList = ({games}) => {
+    return (
+        <ul className="game-list">
+            {
+                games.map((game)=> {
+                    return (
+                        <li key={game.id}>
+                        <GameListItem game = {game}/>
+                    </li>
+                    );
+                })
+            }
+        </ul>
+    )
+
+}
+class GameListContainer extends Component{
     componentDidMount() {
         this.props.fetchGames();
     }
@@ -22,21 +38,11 @@ class GameList extends Component{
         if(error){
             return <ErrorIndicator/>
         }
-        return (
-            <ul className="game-list">
-                {
-                    games.map((game)=> {
-                        return (
-                            <li key={game.id}>
-                            <GameListItem game = {game}/>
-                        </li>
-                        );
-                    })
-                }
-            </ul>
-        )
+        return <GameList games={games}/>
     }
 };
+
+
 const mapStateToProps = ({games, loading, error}) =>{
     return{
         games,
@@ -53,4 +59,4 @@ const mapDispatchToProps = (dispatch, {gamestoreService}) => {
 export default compose(
     withGamestoreService(),
     connect(mapStateToProps, mapDispatchToProps)
-)(GameList);
+)(GameListContainer);
