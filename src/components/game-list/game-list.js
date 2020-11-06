@@ -11,15 +11,7 @@ import ErrorIndicator from './../error-indicator/index';
 
 class GameList extends Component{
     componentDidMount() {
-        const {gamestoreService,
-                gamesLoaded,
-                gamesRequested,
-                gamesError
-            } = this.props;
-        gamesRequested();
-        gamestoreService.getGames()
-            .then((data) => gamesLoaded(data))
-            .catch((err) => gamesError(err));
+        this.props.fetchGames();
     }
 
     render() {
@@ -52,10 +44,16 @@ const mapStateToProps = ({games, loading, error}) =>{
         error
     };
 }
-const mapDispatchToProps =  {
-    gamesLoaded,
-    gamesRequested,
-    gamesError
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const {gamestoreService} = ownProps;
+    return {
+        fetchGames: () => {
+        dispatch(gamesRequested());
+        gamestoreService.getGames()
+            .then((data) => dispatch(gamesLoaded(data)))
+            .catch((err) => dispatch(gamesError(err)));
+        }
+    }
 };
 
 export default compose(
